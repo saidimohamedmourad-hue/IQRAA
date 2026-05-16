@@ -1,0 +1,70 @@
+import '../datasources/api_client.dart';
+import '../models/job/job_model.dart';
+
+class JobRepository {
+  final _client = ApiClient();
+
+  Future<List<JobModel>> getJobs({String? search, String? type, String? category}) async {
+    final res = await _client.dio.get('/jobs', queryParameters: {
+      if (search != null && search.isNotEmpty) 'search': search,
+      if (type != null) 'type': type,
+      if (category != null) 'category': category,
+    });
+    final data = res.data['data'] as List;
+    return data.map((e) => JobModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<JobModel> getJob(String id) async {
+    final res = await _client.dio.get('/jobs/$id');
+    return JobModel.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  Future<void> applyJob(String jobId, {String? resumeId}) async {
+    await _client.dio.post('/jobs/$jobId/apply', data: {
+      if (resumeId != null) 'resume_id': resumeId,
+    });
+  }
+
+  Future<List<JobApplicationModel>> myApplications() async {
+    final res = await _client.dio.get('/my/job-applications');
+    final data = res.data['data'] as List;
+    return data.map((e) => JobApplicationModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  // Company-owner
+  Future<List<JobModel>> companyJobs() async {
+    final res = await _client.dio.get('/company/jobs');
+    final data = res.data['data'] as List;
+    return data.map((e) => JobModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<JobModel> createJob(Map<String, dynamic> data) async {
+    final res = await _client.dio.post('/company/jobs', data: data);
+    return JobModel.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  Future<JobModel> updateJob(String id, Map<String, dynamic> data) async {
+    final res = await _client.dio.put('/company/jobs/$id', data: data);
+    return JobModel.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  Future<List<JobCategoryModel>> getJobCategories() async {
+    final res = await _client.dio.get('/job-categories');
+    final data = res.data['data'] as List;
+    return data.map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> deleteJob(String id) async {
+    await _client.dio.delete('/company/jobs/$id');
+  }
+
+  Future<List<JobApplicationModel>> jobApplicants(String jobId) async {
+    final res = await _client.dio.get('/company/jobs/$jobId/applicants');
+    final data = res.data['data'] as List;
+    return data.map((e) => JobApplicationModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> updateApplicationStatus(String applicationId, String status) async {
+    await _client.dio.put('/company/applications/$applicationId/status', data: {'status': status});
+  }
+}
