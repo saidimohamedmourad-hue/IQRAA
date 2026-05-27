@@ -23,7 +23,36 @@ class _SessionFormScreenState extends ConsumerState<SessionFormScreen> {
   String? _trainingCategoryId;
   DateTime? _startDate;
   bool _loading = false;
+  bool _loadingData = false;
   bool get _isEdit => widget.sessionId != null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_isEdit) _loadExistingSession();
+  }
+
+  Future<void> _loadExistingSession() async {
+    setState(() => _loadingData = true);
+    try {
+      final session = await TrainingRepository().getSession(widget.sessionId!);
+      if (mounted) {
+        setState(() {
+          _title.text = session.title;
+          _description.text = session.description;
+          _location.text = session.location;
+          _maxParticipants.text = session.maxParticipants.toString();
+          _status = session.status;
+          _startDate = session.trainingDate;
+          _trainingCategoryId = session.trainingCategory?.id;
+        });
+      }
+    } catch (e) {
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+    } finally {
+      if (mounted) setState(() => _loadingData = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -32,13 +61,21 @@ class _SessionFormScreenState extends ConsumerState<SessionFormScreen> {
   }
 
   Future<void> _pickDate() async {
-    final d = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(const Duration(days: 365 * 2)));
+    final d = await showDatePicker(
+      context: context,
+      initialDate: _startDate ?? DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
+    );
     if (d != null) setState(() => _startDate = d);
   }
 
   Future<void> _submit() async {
     if (!_form.currentState!.validate()) return;
-    if (_startDate == null) { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Choisissez une date'))); return; }
+    if (_startDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Choisissez une date')));
+      return;
+    }
     setState(() => _loading = true);
     try {
       final data = {
@@ -65,64 +102,81 @@ class _SessionFormScreenState extends ConsumerState<SessionFormScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(_isEdit ? 'Modifier la formation' : 'Nouvelle formation')),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
-      child: Form(
-        key: _form,
-        child: Column(
-          children: [
-            TextFormField(controller: _title, decoration: const InputDecoration(labelText: 'Titre'), validator: (v) => v?.isEmpty == true ? 'Requis' : null),
-            const SizedBox(height: 16),
-            TextFormField(controller: _description, decoration: const InputDecoration(labelText: 'Description'), maxLines: 4, validator: (v) => v?.isEmpty == true ? 'Requis' : null),
-            const SizedBox(height: 16),
-            TextFormField(controller: _location, decoration: const InputDecoration(labelText: 'Lieu', prefixIcon: Icon(Icons.location_on_outlined)), validator: (v) => v?.isEmpty == true ? 'Requis' : null),
-            const SizedBox(height: 16),
-            TextFormField(controller: _maxParticipants, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Nombre maximum de participants', prefixIcon: Icon(Icons.people_outline)), validator: (v) => (v == null || int.tryParse(v) == null) ? 'Nombre invalide' : null),
-            const SizedBox(height: 16),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.calendar_today_outlined, color: AppColors.primary),
-              title: Text(_startDate == null ? 'Date de début' : '${_startDate!.day}/${_startDate!.month}/${_startDate!.year}'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: _pickDate,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: AppColors.lightGrey)),
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              initialValue: _status,
-              decoration: const InputDecoration(labelText: 'Statut'),
-              items: const [
-                DropdownMenuItem(value: 'draft', child: Text('Brouillon')),
-                DropdownMenuItem(value: 'open', child: Text('Ouverte')),
-                DropdownMenuItem(value: 'closed', child: Text('Fermée')),
-                DropdownMenuItem(value: 'cancelled', child: Text('Annulée')),
-              ],
-              onChanged: (v) => setState(() => _status = v!),
-            ),
-            const SizedBox(height: 16),
-            ref.watch(trainingCategoriesProvider).when(
-              data: (categories) => DropdownButtonFormField<String>(
-                initialValue: _trainingCategoryId,
-                decoration: const InputDecoration(labelText: 'Catégorie de formation'),
-                items: categories.map((c) => DropdownMenuItem(value: c.id, child: Text(c.name))).toList(),
-                onChanged: (v) => setState(() => _trainingCategoryId = v),
-                validator: (v) => v == null ? 'Choisissez une catégorie' : null,
+  Widget build(BuildContext context) {
+    if (_loadingData) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Chargement...')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: Text(_isEdit ? 'Modifier la formation' : 'Nouvelle formation')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _form,
+          child: Column(
+            children: [
+              TextFormField(controller: _title, decoration: const InputDecoration(labelText: 'Titre'), validator: (v) => v?.isEmpty == true ? 'Requis' : null),
+              const SizedBox(height: 16),
+              TextFormField(controller: _description, decoration: const InputDecoration(labelText: 'Description'), maxLines: 4, validator: (v) => v?.isEmpty == true ? 'Requis' : null),
+              const SizedBox(height: 16),
+              TextFormField(controller: _location, decoration: const InputDecoration(labelText: 'Lieu', prefixIcon: Icon(Icons.location_on_outlined)), validator: (v) => v?.isEmpty == true ? 'Requis' : null),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _maxParticipants,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Nombre maximum de participants', prefixIcon: Icon(Icons.people_outline)),
+                validator: (v) => (v == null || v.isEmpty || int.tryParse(v) == null) ? 'Nombre invalide' : null,
               ),
-              loading: () => const LinearProgressIndicator(),
-              error: (e, _) => Text('Impossible de charger les catégories: $e', style: const TextStyle(color: AppColors.error)),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _loading ? null : _submit,
-              child: _loading
-                  ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                  : Text(_isEdit ? 'Enregistrer' : 'Créer la formation'),
-            ),
-          ],
+              const SizedBox(height: 16),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.calendar_today_outlined, color: AppColors.primary),
+                title: Text(_startDate == null ? 'Date de début *' : '${_startDate!.day}/${_startDate!.month}/${_startDate!.year}'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: _pickDate,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: AppColors.lightGrey)),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                initialValue: _status,
+                decoration: const InputDecoration(labelText: 'Statut'),
+                items: const [
+                  DropdownMenuItem(value: 'draft', child: Text('Brouillon')),
+                  DropdownMenuItem(value: 'open', child: Text('Ouverte')),
+                  DropdownMenuItem(value: 'closed', child: Text('Fermée')),
+                  DropdownMenuItem(value: 'cancelled', child: Text('Annulée')),
+                ],
+                onChanged: (v) => setState(() => _status = v!),
+              ),
+              const SizedBox(height: 16),
+              ref.watch(trainingCategoriesProvider).when(
+                data: (categories) => DropdownButtonFormField<String>(
+                  initialValue: _trainingCategoryId,
+                  decoration: const InputDecoration(labelText: 'Catégorie de formation'),
+                  items: categories.map((c) => DropdownMenuItem(value: c.id, child: Text(c.name))).toList(),
+                  onChanged: (v) => setState(() => _trainingCategoryId = v),
+                  validator: (v) => v == null ? 'Choisissez une catégorie' : null,
+                ),
+                loading: () => const LinearProgressIndicator(),
+                error: (e, _) => Text('Impossible de charger les catégories: $e', style: const TextStyle(color: AppColors.error)),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _loading ? null : _submit,
+                  child: _loading
+                      ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                      : Text(_isEdit ? 'Enregistrer' : 'Créer la formation'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

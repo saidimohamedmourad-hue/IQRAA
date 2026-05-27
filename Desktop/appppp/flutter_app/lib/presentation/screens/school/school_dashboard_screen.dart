@@ -16,7 +16,6 @@ class SchoolDashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).valueOrNull;
-    final dashAsync = ref.watch(_schoolDashProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,38 +27,143 @@ class SchoolDashboardScreen extends ConsumerWidget {
           }),
         ],
       ),
-      body: dashAsync.when(
-        data: (data) => SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              GridView.count(
-                crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.5,
-                children: [
-                  _Stat(label: 'Formations', value: '${data['totalSessions'] ?? 0}', icon: Icons.school, color: AppColors.secondary),
-                  _Stat(label: 'Inscriptions', value: '${data['totalApplications'] ?? 0}', icon: Icons.people, color: AppColors.primary),
-                  _Stat(label: 'En attente', value: '${data['pendingApplications'] ?? 0}', icon: Icons.pending, color: AppColors.warning),
-                  _Stat(label: 'Taux remplissage', value: '-', icon: Icons.bar_chart, color: AppColors.success),
-                ],
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton.icon(
+      body: (user == null || !user.hasSchool)
+          ? _PendingScreen(
+              icon: Icons.school_outlined,
+              title: 'Compte en attente',
+              message: 'Votre compte a bien été créé avec le rôle école.\n\nUn administrateur doit encore créer et associer votre école dans le back-office.\n\nUne fois lié, rafraîchissez pour accéder à votre espace.',
+              onRefresh: () async {
+                await ref.read(authProvider.notifier).refreshUser();
+                ref.invalidate(_schoolDashProvider);
+              },
+            )
+          : _SchoolDashBody(),
+    );
+  }
+}
+
+class _SchoolDashBody extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dashAsync = ref.watch(_schoolDashProvider);
+
+    return dashAsync.when(
+      data: (data) => SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            GridView.count(
+              crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.5,
+              children: [
+                _Stat(label: 'Formations', value: '${data['totalSessions'] ?? 0}', icon: Icons.school, color: AppColors.secondary),
+                _Stat(label: 'Inscriptions', value: '${data['totalApplications'] ?? 0}', icon: Icons.people, color: AppColors.primary),
+                _Stat(label: 'En attente', value: '${data['pendingApplications'] ?? 0}', icon: Icons.pending, color: AppColors.warning),
+                _Stat(label: 'Taux remplissage', value: '-', icon: Icons.bar_chart, color: AppColors.success),
+              ],
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
                 icon: const Icon(Icons.add),
                 label: const Text('Créer une formation'),
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.secondary),
                 onPressed: () => context.push('/school/sessions/new'),
               ),
-              const SizedBox(height: 10),
-              OutlinedButton.icon(icon: const Icon(Icons.list), label: const Text('Gérer les formations'), onPressed: () => context.push('/school/sessions')),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(icon: const Icon(Icons.list), label: const Text('Gérer les formations'), onPressed: () => context.push('/school/sessions')),
+            ),
+          ],
+        ),
+      ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+              const SizedBox(height: 12),
+              Text(e.toString(), textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Réessayer'),
+                onPressed: () => ref.invalidate(_schoolDashProvider),
+              ),
             ],
           ),
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
       ),
     );
   }
+}
+
+class _PendingScreen extends StatefulWidget {
+  const _PendingScreen({
+    required this.icon,
+    required this.title,
+    required this.message,
+    required this.onRefresh,
+  });
+  final IconData icon;
+  final String title;
+  final String message;
+  final Future<void> Function() onRefresh;
+
+  @override
+  State<_PendingScreen> createState() => _PendingScreenState();
+}
+
+class _PendingScreenState extends State<_PendingScreen> {
+  bool _refreshing = false;
+
+  Future<void> _doRefresh() async {
+    setState(() => _refreshing = true);
+    await widget.onRefresh();
+    if (mounted) setState(() => _refreshing = false);
+  }
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: AppColors.warning.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(widget.icon, size: 64, color: AppColors.warning),
+          ),
+          const SizedBox(height: 24),
+          Text(widget.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 12),
+          Text(
+            widget.message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: AppColors.grey, fontSize: 15, height: 1.5),
+          ),
+          const SizedBox(height: 32),
+          ElevatedButton.icon(
+            icon: _refreshing
+                ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                : const Icon(Icons.refresh),
+            label: const Text('Rafraîchir'),
+            onPressed: _refreshing ? null : _doRefresh,
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _Stat extends StatelessWidget {

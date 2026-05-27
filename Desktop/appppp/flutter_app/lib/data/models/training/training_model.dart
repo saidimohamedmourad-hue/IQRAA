@@ -81,12 +81,27 @@ class TrainingSessionModel {
   );
 }
 
+class TrainingApplicantUserModel {
+  final String id;
+  final String name;
+  final String email;
+
+  const TrainingApplicantUserModel({required this.id, required this.name, required this.email});
+
+  factory TrainingApplicantUserModel.fromJson(Map<String, dynamic> json) => TrainingApplicantUserModel(
+    id: json['id'].toString(),
+    name: json['name'] as String,
+    email: json['email'] as String,
+  );
+}
+
 class TrainingApplicationModel {
   final String id;
   final String status;
   final int? aiGeneratedScore;
   final String? aiGeneratedFeedback;
   final TrainingSessionModel? trainingSession;
+  final TrainingApplicantUserModel? user;
   final DateTime appliedAt;
 
   const TrainingApplicationModel({
@@ -96,16 +111,18 @@ class TrainingApplicationModel {
     this.aiGeneratedScore,
     this.aiGeneratedFeedback,
     this.trainingSession,
+    this.user,
   });
 
   factory TrainingApplicationModel.fromJson(Map<String, dynamic> json) => TrainingApplicationModel(
     id: json['id'] as String,
     status: json['status'] as String,
-    aiGeneratedScore: json['aiGeneratedScore'] as int?,
+    aiGeneratedScore: (json['aiGeneratedScore'] as num?)?.toInt(),
     aiGeneratedFeedback: json['aiGeneratedFeedback'] as String?,
     trainingSession: json['training_session'] != null
         ? TrainingSessionModel.fromJson(json['training_session'] as Map<String, dynamic>)
         : null,
+    user: json['user'] != null ? TrainingApplicantUserModel.fromJson(json['user'] as Map<String, dynamic>) : null,
     appliedAt: DateTime.parse(json['created_at'] as String),
   );
 }

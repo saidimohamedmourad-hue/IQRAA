@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../providers/job_provider.dart';
+import '../../widgets/apply_bottom_sheet.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/job/job_model.dart';
 import '../../../data/repositories/job_repository.dart';
@@ -35,12 +37,30 @@ class _JobDetailBodyState extends ConsumerState<_JobDetailBody> {
   bool _applying = false;
 
   Future<void> _apply() async {
+    final selection = await showApplyBottomSheet(context);
+    if (selection == null || !selection.isValid) return;
+
     setState(() => _applying = true);
     try {
-      await JobRepository().applyJob(widget.job.id);
+      await JobRepository().applyJob(
+        widget.job.id,
+        resumeId: selection.resumeId,
+        filePath: selection.filePath,
+        fileName: selection.fileName,
+        fileBytes: selection.fileBytes,
+      );
+      ref.invalidate(myJobApplicationsProvider);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Candidature envoyée !'), backgroundColor: AppColors.success),
+          SnackBar(
+            content: const Text('Candidature envoyée ! L\'analyse IA est en cours (consultez « Mes candidatures »).'),
+            backgroundColor: AppColors.success,
+            action: SnackBarAction(
+              label: 'Voir',
+              textColor: Colors.white,
+              onPressed: () => context.push('/my-applications'),
+            ),
+          ),
         );
       }
     } catch (e) {
@@ -86,7 +106,7 @@ class _JobDetailBodyState extends ConsumerState<_JobDetailBody> {
                     children: [
                       _Tag(icon: Icons.location_on_outlined, label: widget.job.location),
                       _Tag(icon: Icons.work_outline, label: widget.job.type, color: AppColors.primary),
-                      _Tag(icon: Icons.attach_money, label: '\$${widget.job.salary.toStringAsFixed(0)}/an', color: AppColors.success),
+                      _Tag(icon: Icons.attach_money, label: '${widget.job.salary.toStringAsFixed(0)} DA/an', color: AppColors.success),
                       if (widget.job.jobCategory != null)
                         _Tag(icon: Icons.category_outlined, label: widget.job.jobCategory!.name, color: AppColors.secondary),
                     ],

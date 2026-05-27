@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import '../datasources/api_client.dart';
 import '../models/training/training_model.dart';
 
@@ -18,10 +21,21 @@ class TrainingRepository {
     return TrainingSessionModel.fromJson(res.data as Map<String, dynamic>);
   }
 
-  Future<void> applySession(String sessionId, {String? resumeId}) async {
-    await _client.dio.post('/training-sessions/$sessionId/apply', data: {
-      if (resumeId != null) 'resume_id': resumeId,
-    });
+  Future<void> applySession(String sessionId, {String? resumeId, String? filePath, String? fileName, Uint8List? fileBytes}) async {
+    final hasFile = fileName != null &&
+        ((filePath != null && filePath.isNotEmpty) ||
+            (fileBytes != null && fileBytes.isNotEmpty));
+    if (hasFile) {
+      final MultipartFile part;
+      if (filePath != null && filePath.isNotEmpty) {
+        part = await MultipartFile.fromFile(filePath, filename: fileName);
+      } else {
+        part = MultipartFile.fromBytes(fileBytes!, filename: fileName);
+      }
+      await _client.dio.post('/training-sessions/$sessionId/apply', data: FormData.fromMap({'resume_file': part}));
+    } else {
+      await _client.dio.post('/training-sessions/$sessionId/apply', data: {'resume_id': resumeId});
+    }
   }
 
   Future<List<TrainingApplicationModel>> myApplications() async {

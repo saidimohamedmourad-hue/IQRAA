@@ -22,6 +22,7 @@ import '../presentation/screens/company/job_applicants_screen.dart';
 import '../presentation/screens/school/school_dashboard_screen.dart';
 import '../presentation/screens/school/school_sessions_screen.dart';
 import '../presentation/screens/school/session_form_screen.dart';
+import '../presentation/screens/school/session_applicants_screen.dart';
 import '../presentation/screens/common/splash_screen.dart';
 
 class _AuthRouterNotifier extends ChangeNotifier {
@@ -85,6 +86,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/school/sessions', builder: (_, __) => const SchoolSessionsScreen()),
       GoRoute(path: '/school/sessions/new', builder: (_, __) => const SessionFormScreen()),
       GoRoute(path: '/school/sessions/:id/edit', builder: (_, s) => SessionFormScreen(sessionId: s.pathParameters['id'])),
+      GoRoute(path: '/school/sessions/:id/applicants', builder: (_, s) => SessionApplicantsScreen(sessionId: s.pathParameters['id']!)),
     ],
   );
 });

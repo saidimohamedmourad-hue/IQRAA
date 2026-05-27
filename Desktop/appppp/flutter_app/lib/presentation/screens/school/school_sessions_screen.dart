@@ -81,6 +81,7 @@ class _SessionTile extends StatelessWidget {
         child: Text(session.status, style: TextStyle(color: _statusColor, fontSize: 11, fontWeight: FontWeight.w600)),
       ),
       trailing: PopupMenuButton(itemBuilder: (_) => [
+        PopupMenuItem(value: 'applicants', child: const Text('Voir candidatures'), onTap: () => context.push('/school/sessions/${session.id}/applicants')),
         PopupMenuItem(value: 'edit', child: const Text('Modifier'), onTap: () => context.push('/school/sessions/${session.id}/edit')),
         PopupMenuItem(value: 'delete', child: const Text('Supprimer', style: TextStyle(color: AppColors.error)), onTap: () => _delete(context)),
       ]),

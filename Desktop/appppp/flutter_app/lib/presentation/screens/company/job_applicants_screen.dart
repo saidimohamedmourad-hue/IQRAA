@@ -70,9 +70,11 @@ class _ApplicantTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(app.id.substring(0, 8), style: const TextStyle(fontWeight: FontWeight.bold)),
-                    if (app.aiGeneratedScore != null)
-                      Text('Score IA: ${app.aiGeneratedScore}%', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 13)),
+                    Text(app.user?.name ?? 'Candidat inconnu', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    if (app.user?.email != null)
+                      Text(app.user!.email, style: const TextStyle(color: AppColors.grey, fontSize: 12)),
+                    if ((app.aiGeneratedScore ?? 0) > 0)
+                      Text('Score IA: ${app.aiGeneratedScore}/100', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 13)),
                   ],
                 ),
               ),

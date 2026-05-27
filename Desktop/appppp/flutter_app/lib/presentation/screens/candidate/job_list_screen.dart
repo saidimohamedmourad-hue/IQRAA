@@ -146,7 +146,7 @@ class _JobListTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('\$${job.salary.toStringAsFixed(0)}', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.dark)),
+                Text('${job.salary.toStringAsFixed(0)} DA', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.dark)),
                 const Text('/an', style: TextStyle(color: AppColors.grey, fontSize: 11)),
               ],
             ),

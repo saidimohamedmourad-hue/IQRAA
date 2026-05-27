@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/job_provider.dart';
 import '../../providers/training_provider.dart';
+import '../../widgets/application_ai_insight.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/job/job_model.dart';
 import '../../../data/models/training/training_model.dart';
@@ -34,13 +35,26 @@ class _JobApplicationsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appsAsync = ref.watch(myJobApplicationsProvider);
     return appsAsync.when(
-      data: (apps) => apps.isEmpty
-          ? const Center(child: Text('Aucune candidature'))
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: apps.length,
-              itemBuilder: (_, i) => _JobAppTile(app: apps[i]),
-            ),
+      data: (apps) => RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(myJobApplicationsProvider);
+          await ref.read(myJobApplicationsProvider.future);
+        },
+        child: apps.isEmpty
+            ? ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: const [
+                  SizedBox(height: 120),
+                  Center(child: Text('Aucune candidature')),
+                ],
+              )
+            : ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                itemCount: apps.length,
+                itemBuilder: (_, i) => _JobAppTile(app: apps[i]),
+              ),
+      ),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(e.toString())),
     );
@@ -52,13 +66,26 @@ class _TrainingApplicationsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appsAsync = ref.watch(myTrainingApplicationsProvider);
     return appsAsync.when(
-      data: (apps) => apps.isEmpty
-          ? const Center(child: Text('Aucune inscription'))
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: apps.length,
-              itemBuilder: (_, i) => _TrainingAppTile(app: apps[i]),
-            ),
+      data: (apps) => RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(myTrainingApplicationsProvider);
+          await ref.read(myTrainingApplicationsProvider.future);
+        },
+        child: apps.isEmpty
+            ? ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: const [
+                  SizedBox(height: 120),
+                  Center(child: Text('Aucune inscription')),
+                ],
+              )
+            : ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                itemCount: apps.length,
+                itemBuilder: (_, i) => _TrainingAppTile(app: apps[i]),
+              ),
+      ),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text(e.toString())),
     );
@@ -80,6 +107,7 @@ class _JobAppTile extends StatelessWidget {
   Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.only(bottom: 10),
     child: ListTile(
+      isThreeLine: true,
       contentPadding: const EdgeInsets.all(16),
       leading: CircleAvatar(backgroundColor: AppColors.primary.withValues(alpha: 0.1), child: const Icon(Icons.work, color: AppColors.primary)),
       title: Text(app.jobVacancy?.title ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -87,9 +115,11 @@ class _JobAppTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(app.jobVacancy?.company?.name ?? ''),
-          const SizedBox(height: 4),
-          if (app.aiGeneratedScore != null)
-            Text('Score IA: ${app.aiGeneratedScore}%', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+          ApplicationAiInsightRow(
+            score: app.aiGeneratedScore,
+            feedback: app.aiGeneratedFeedback,
+            dialogTitle: 'Analyse IA — adéquation au poste',
+          ),
         ],
       ),
       trailing: Container(
@@ -116,10 +146,21 @@ class _TrainingAppTile extends StatelessWidget {
   Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.only(bottom: 10),
     child: ListTile(
+      isThreeLine: true,
       contentPadding: const EdgeInsets.all(16),
       leading: CircleAvatar(backgroundColor: AppColors.secondary.withValues(alpha: 0.1), child: const Icon(Icons.school, color: AppColors.secondary)),
       title: Text(app.trainingSession?.title ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(app.trainingSession?.school?.name ?? ''),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(app.trainingSession?.school?.name ?? ''),
+          ApplicationAiInsightRow(
+            score: app.aiGeneratedScore,
+            feedback: app.aiGeneratedFeedback,
+            dialogTitle: 'Analyse IA — adéquation à la formation',
+          ),
+        ],
+      ),
       trailing: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(color: _statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),

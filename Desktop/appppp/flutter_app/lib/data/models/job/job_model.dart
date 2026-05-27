@@ -67,12 +67,27 @@ class JobModel {
   );
 }
 
+class ApplicantUserModel {
+  final String id;
+  final String name;
+  final String email;
+
+  const ApplicantUserModel({required this.id, required this.name, required this.email});
+
+  factory ApplicantUserModel.fromJson(Map<String, dynamic> json) => ApplicantUserModel(
+    id: json['id'].toString(),
+    name: json['name'] as String,
+    email: json['email'] as String,
+  );
+}
+
 class JobApplicationModel {
   final String id;
   final String status;
   final int? aiGeneratedScore;
   final String? aiGeneratedFeedback;
   final JobModel? jobVacancy;
+  final ApplicantUserModel? user;
   final DateTime appliedAt;
 
   const JobApplicationModel({
@@ -82,14 +97,16 @@ class JobApplicationModel {
     this.aiGeneratedScore,
     this.aiGeneratedFeedback,
     this.jobVacancy,
+    this.user,
   });
 
   factory JobApplicationModel.fromJson(Map<String, dynamic> json) => JobApplicationModel(
     id: json['id'] as String,
     status: json['status'] as String,
-    aiGeneratedScore: json['aiGeneratedScore'] as int?,
+    aiGeneratedScore: (json['aiGeneratedScore'] as num?)?.toInt(),
     aiGeneratedFeedback: json['aiGeneratedFeedback'] as String?,
     jobVacancy: json['job_vacancy'] != null ? JobModel.fromJson(json['job_vacancy'] as Map<String, dynamic>) : null,
+    user: json['user'] != null ? ApplicantUserModel.fromJson(json['user'] as Map<String, dynamic>) : null,
     appliedAt: DateTime.parse(json['created_at'] as String),
   );
 }

@@ -1,0 +1,90 @@
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/home","isLoading":true,"isAuth":false,"isOnAuth":false,"isOnSplash":false,"userRole":null},"timestamp":1778853165091}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/splash","isLoading":true,"isAuth":false,"isOnAuth":false,"isOnSplash":true,"userRole":null},"timestamp":1778853165108}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/splash","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":true,"userRole":"job-seeker"},"timestamp":1778853167366}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/home","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853167373}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853171290}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853171299}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853171301}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853171304}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853171306}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853171309}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853171313}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853171316}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853171318}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853171321}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/jobs","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853181252}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853183473}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853183476}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853183478}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853183479}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853183481}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853183484}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853183485}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853183487}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853183488}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853183490}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853186610}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853186611}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853186615}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853186619}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853186622}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853186623}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853186626}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853186627}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853186630}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853186634}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853188608}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853188614}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853188616}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853188609}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853188617}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853188618}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853188620}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853188622}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853188623}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853188625}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853191636}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853191643}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853191642}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853191640}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853191646}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853191648}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853191650}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853191652}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853191654}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853191656}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853194431}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853194434}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853194433}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853194436}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853194438}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"145000","salaryType":"String"},"timestamp":1778853194440}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"95000","salaryType":"String"},"timestamp":1778853194441}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"200000","salaryType":"String"},"timestamp":1778853194443}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"140000","salaryType":"String"},"timestamp":1778853194444}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853194446}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/training","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853194750}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853195718}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853195726}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853195728}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853195729}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853195722}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"145000","salaryType":"String"},"timestamp":1778853195731}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"95000","salaryType":"String"},"timestamp":1778853195732}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"200000","salaryType":"String"},"timestamp":1778853195734}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"140000","salaryType":"String"},"timestamp":1778853195735}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853195737}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/my-applications","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853209958}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/training/019e1d55-797d-70f8-a2d8-9404c901d486","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853212687}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/home","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853243176}
+{"sessionId":"a920f0","hypothesisId":"B","location":"router.dart:redirect","message":"redirect eval","data":{"loc":"/jobs","isLoading":false,"isAuth":true,"isOnAuth":false,"isOnSplash":false,"userRole":"job-seeker"},"timestamp":1778853245161}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"2500","salaryType":"String"},"timestamp":1778853248205}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853248214}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"30000","salaryType":"String"},"timestamp":1778853248227}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"110000","salaryType":"String"},"timestamp":1778853248243}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"130000","salaryType":"String"},"timestamp":1778853248273}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"85000","salaryType":"String"},"timestamp":1778853248296}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"90000","salaryType":"String"},"timestamp":1778853248471}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"120000","salaryType":"String"},"timestamp":1778853248492}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"135000","salaryType":"String"},"timestamp":1778853248507}
+{"sessionId":"a920f0","hypothesisId":"A","location":"job_model.dart:56","message":"salary before cast","data":{"salary":"190000","salaryType":"String"},"timestamp":1778853248539}

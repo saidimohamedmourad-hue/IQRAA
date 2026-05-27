@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Job Flutter App</string>
+	<string>Job &amp; Formation</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Cette application utilise la caméra pour votre photo de profil.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cette application accède à vos photos pour votre profil et vos documents.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Cette application peut enregistrer des images dans votre photothèque.</string>
 </dict>
 </plist>

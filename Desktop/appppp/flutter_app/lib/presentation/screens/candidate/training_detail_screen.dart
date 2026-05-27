@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../providers/training_provider.dart';
+import '../../widgets/apply_bottom_sheet.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/training/training_model.dart';
 import '../../../data/repositories/training_repository.dart';
@@ -33,12 +35,30 @@ class _TrainingDetailBodyState extends ConsumerState<_TrainingDetailBody> {
   bool _applying = false;
 
   Future<void> _apply() async {
+    final selection = await showApplyBottomSheet(context);
+    if (selection == null || !selection.isValid) return;
+
     setState(() => _applying = true);
     try {
-      await TrainingRepository().applySession(widget.session.id);
+      await TrainingRepository().applySession(
+        widget.session.id,
+        resumeId: selection.resumeId,
+        filePath: selection.filePath,
+        fileName: selection.fileName,
+        fileBytes: selection.fileBytes,
+      );
+      ref.invalidate(myTrainingApplicationsProvider);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Inscription envoyée !'), backgroundColor: AppColors.success),
+          SnackBar(
+            content: const Text('Inscription envoyée ! L\'analyse IA est en cours (consultez « Mes candidatures »).'),
+            backgroundColor: AppColors.success,
+            action: SnackBarAction(
+              label: 'Voir',
+              textColor: Colors.white,
+              onPressed: () => context.push('/my-applications'),
+            ),
+          ),
         );
       }
     } catch (e) {
@@ -87,7 +107,7 @@ class _TrainingDetailBodyState extends ConsumerState<_TrainingDetailBody> {
                     _InfoRow(icon: Icons.calendar_today_outlined, label: 'Début: ${fmt.format(s.trainingDate)}'),
                     if (s.endDate != null) _InfoRow(icon: Icons.event_outlined, label: 'Fin: ${fmt.format(s.endDate!)}'),
                     _InfoRow(icon: Icons.people_outline, label: '${s.currentParticipants}/${s.maxParticipants} participants'),
-                    if (s.salary != null && s.salary! > 0) _InfoRow(icon: Icons.attach_money, label: '\$${s.salary!.toStringAsFixed(0)}'),
+                    if (s.salary != null && s.salary! > 0) _InfoRow(icon: Icons.attach_money, label: '${s.salary!.toStringAsFixed(0)} DA'),
                     if (s.trainingCategory != null) _InfoRow(icon: Icons.category_outlined, label: s.trainingCategory!.name),
                     const SizedBox(height: 24),
                     const Text('Description', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),

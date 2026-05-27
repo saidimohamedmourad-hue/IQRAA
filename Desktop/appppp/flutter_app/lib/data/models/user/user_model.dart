@@ -6,6 +6,8 @@ class UserModel {
   final String? profilePicture;
   final String? cvUrl;
   final DateTime? lastLoginAt;
+  final bool hasCompany;
+  final bool hasSchool;
 
   const UserModel({
     required this.id,
@@ -15,6 +17,8 @@ class UserModel {
     this.profilePicture,
     this.cvUrl,
     this.lastLoginAt,
+    this.hasCompany = false,
+    this.hasSchool = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -27,6 +31,8 @@ class UserModel {
     lastLoginAt: json['last_login_at'] != null
         ? DateTime.parse(json['last_login_at'] as String)
         : null,
+    hasCompany: json['has_company'] as bool? ?? false,
+    hasSchool: json['has_school'] as bool? ?? false,
   );
 
   bool get isJobSeeker   => role == 'job-seeker';

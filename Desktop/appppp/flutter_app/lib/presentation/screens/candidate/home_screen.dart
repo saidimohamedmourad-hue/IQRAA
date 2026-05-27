@@ -150,7 +150,7 @@ class _JobCard extends StatelessWidget {
             child: Text(job.type, style: const TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w600)),
           ),
           const SizedBox(height: 4),
-          Text('\$${job.salary.toStringAsFixed(0)}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          Text('${job.salary.toStringAsFixed(0)} DA', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
         ],
       ),
       onTap: () => context.push('/jobs/${job.id}'),

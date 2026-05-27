@@ -17,7 +17,7 @@ String _extractError(Object e) {
       return 'Impossible de joindre le serveur. Vérifiez que le backend est démarré.';
     }
     if (e.type == DioExceptionType.unknown) {
-      return 'Erreur réseau. Vérifiez votre connexion et que le backend tourne sur localhost:8000.';
+      return 'Erreur réseau. Vérifiez votre connexion et que l\'API backend est accessible.';
     }
   }
   return e.toString();
